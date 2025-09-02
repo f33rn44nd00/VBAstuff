@@ -5,7 +5,7 @@ Dim ColNm As String
 
 ColNm = ActiveCell.Offset(2 - ActiveCell.Row).Value
 If ColNm = "" Then
-    MsgBox ("No se encontró la columna!")
+    MsgBox ("No se encontrÃ³ la columna!")
     Exit Sub
 ElseIf ActiveCell.FormatConditions.Count <> 0 Then
     Color_Format (ColNm)
@@ -84,7 +84,7 @@ End Sub
 
 Sub Color_New(ColNm)
 ' Just change the name of the column in Set ColorColumn
-' Does not recognize colors from conditional formatting. Colors must be put manually.
+' Only for conditional formatting colors.
 
     Dim ws As Worksheet
     Dim ws2 As Worksheet
@@ -148,3 +148,4 @@ Sub Color_New(ColNm)
     Next cell
     ws.Shapes("TextboxMap").TextFrame.Characters.Text = ColNm
 End Sub
+
