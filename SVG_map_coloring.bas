@@ -1,6 +1,9 @@
 Attribute VB_Name = "Module2"
 
+
 Sub SelectFunctionColumn()
+' Deprecated: chooses macro based on the existence of conditional formatting in the selected cell
+' Replaced by "Worksheet change" Sub in "Mapas" sheet
 Dim ColNm As String
 
 ColNm = ActiveCell.Offset(2 - ActiveCell.Row).Value
@@ -12,6 +15,16 @@ ElseIf ActiveCell.FormatConditions.Count <> 0 Then
 Else
     Color_New (ColNm)
 End If
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+'Hacky method: identifies cursor placement in worksheet, supposedly triggers on update of the dropdown in B3
+Dim ColNm As String
+    If Target.Address = "$B$3" Then
+        ColNm = Range("$B$3").Value
+        Color_New (ColNm)
+        Color_Format (ColNm)
+    End If
 End Sub
 
 Sub Color_Format(ColNm)
@@ -36,14 +49,14 @@ Sub Color_Format(ColNm)
     ' Set the Excel table
     Set tbl = ws2.ListObjects("T_Municipios")
     
-    ' Set the range for the state column and color column
+    ' Set the range for the municipio column and color column
     Set municipiosColumn = tbl.ListColumns("Municipios").DataBodyRange
     Set colorColumn = tbl.ListColumns(ColNm).DataBodyRange
     
-    ' Loop through each state in the state column
+    ' Loop through each municipio in the column
     For Each cell In municipiosColumn
         On Error Resume Next
-        ' Get the shape corresponding to the municipios
+        ' Get the shape corresponding to the municipio name
         nameshape = cell.Value
         Set shape = ws.Shapes(nameshape)
         If Err.Number = 0 Then
@@ -53,7 +66,7 @@ Sub Color_Format(ColNm)
             ' Get the color of the corresponding cell in the color column
             colorIndex = xlNone ' Default color if not found
             
-            ' Find the corresponding municipios in the color column and get its color
+            ' Find the corresponding municipio in the color column and get its color
             Dim municipiosIndex As Long
             municipiosIndex = cell.Row - municipiosColumn.Row + 1 ' Adjust index for data body range
             If municipiosIndex >= 1 And municipiosIndex <= colorColumn.Rows.Count Then
@@ -84,7 +97,7 @@ End Sub
 
 Sub Color_New(ColNm)
 ' Just change the name of the column in Set ColorColumn
-' Only for conditional formatting colors.
+' Does not recognize colors from conditional formatting. Colors must be put manually.
 
     Dim ws As Worksheet
     Dim ws2 As Worksheet
@@ -148,4 +161,3 @@ Sub Color_New(ColNm)
     Next cell
     ws.Shapes("TextboxMap").TextFrame.Characters.Text = ColNm
 End Sub
-
