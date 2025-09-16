@@ -10,6 +10,3 @@ Used to color svg shapes from column fills, two options for manual fills and wro
 
 ## Word Userform for a multiple-choice dropdown
 Using a Userform to populate a table cell with multiple possible options. Main credit goes to [Jay Freedman at Microsoft forums](https://answers.microsoft.com/en-us/msoffice/forum/all/multiple-selection-from-a-drop-down-menu-in-ms/8b14e0fa-641c-4653-8e86-55353fe0cc30?page=2) (click on "more replies" to see the detailed answer)
-
-## Extracting content from tables (Word to Excel)
-In-progress
